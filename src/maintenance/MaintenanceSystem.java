@@ -20,6 +20,7 @@ public class MaintenanceSystem {
             System.out.println("Location: " + issue.getLocation());
             System.out.println("Priority: " + issue.getPriority());
             System.out.println("Status: " + issue.getStatus());
+            System.out.println("Reported By: " + issue.getReportedBy().getName());
             if (issue.getAssignedTo() != null) {
                 System.out.println("Assigned Technician: "
                         + issue.getAssignedTo().getName());
@@ -29,11 +30,24 @@ public class MaintenanceSystem {
             System.out.println("----------------------");
         }
     }
-    public void updateStatus(int issueId, String newStatus) {
+    public void updateStatus(int issueId, Status newStatus) {
         for (Issue issue : issues) {
             if (issue.getIssueId() == issueId) {
-                issue.setStatus(newStatus);
-                System.out.println("Status updated successfully.");
+
+                Status currentStatus = issue.getStatus();
+
+                if (currentStatus == Status.OPEN && newStatus == Status.ASSIGNED
+                        || currentStatus == Status.ASSIGNED && newStatus == Status.IN_PROGRESS
+                        || currentStatus == Status.IN_PROGRESS && newStatus == Status.RESOLVED
+                        || currentStatus == Status.RESOLVED && newStatus == Status.CLOSED) {
+
+                    issue.setStatus(newStatus);
+                    System.out.println("Status updated successfully.");
+
+                } else {
+                    System.out.println("Invalid status transition.");
+                }
+
                 return;
             }
         }
@@ -44,6 +58,7 @@ public class MaintenanceSystem {
         for (Issue issue : issues) {
             if (issue.getIssueId() == issueId) {
                 issue.setAssignedTo(technician);
+                issue.setStatus(Status.ASSIGNED);
                 System.out.println("Technician assigned successfully.");
                 return;
             }
@@ -61,5 +76,18 @@ public class MaintenanceSystem {
         }
 
         return null;
+    }
+    public void removeIssue(int issueId) {
+
+        for (int i = 0; i < issues.size(); i++) {
+
+            if (issues.get(i).getIssueId() == issueId) {
+                issues.remove(i);
+                System.out.println("Issue removed successfully.");
+                return;
+            }
+        }
+
+        System.out.println("Issue not found.");
     }
 }

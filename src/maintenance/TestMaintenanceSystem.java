@@ -14,8 +14,8 @@ public class TestMaintenanceSystem {
                 1024,
                 "PC #17 not booting",
                 "CSE Lab 2",
-                "HIGH",
-                "OPEN",
+                Priority.HIGH,
+                Status.OPEN,
                 user,
                 technician
         );
@@ -24,16 +24,19 @@ public class TestMaintenanceSystem {
                 1025,
                 "Projector not working",
                 "CSE Lab 1",
-                "MEDIUM",
-                "OPEN",
+                Priority.MEDIUM,
+                Status.OPEN,
                 user,
                 null
         );
 
         system.addIssue(issue1);
         system.addIssue(issue2);
+
+        system.assignTechnician(1024, technician);
         system.assignTechnician(1025, technician);
-        system.updateStatus(1024, "IN PROGRESS");
+
+        system.updateStatus(1024, Status.IN_PROGRESS);
         system.displayIssues();
 
         System.out.println("Total issues: " + system.getIssues().size());
@@ -44,5 +47,11 @@ public class TestMaintenanceSystem {
         } else {
             System.out.println("Issue not found.");
         }
+        system.removeIssue(1025);
+
+        System.out.println("After removing:");
+        system.displayIssues();
+
+        System.out.println("Total issues: " + system.getIssues().size());
     }
 }

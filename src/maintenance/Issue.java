@@ -4,12 +4,12 @@ public class Issue {
     private int issueId;
     private String description;
     private String location;
-    private String priority;
-    private String status;
+    private Priority priority;
+    private Status status;
     private User reportedBy;
     private Technician assignedTo;
     public Issue(int issueId, String description, String location,
-            String priority, String status, User reportedBy,
+    		Priority priority, Status status, User reportedBy,
             Technician assignedTo) {
 
    this.issueId = issueId;
@@ -38,16 +38,17 @@ public class Issue {
 	public void setLocation(String location) {
 		this.location = location;
 	}
-	public String getPriority() {
-		return priority;
+	public Priority getPriority() {
+	    return priority;
 	}
-	public void setPriority(String priority) {
-		this.priority = priority;
+
+	public void setPriority(Priority priority) {
+	    this.priority = priority;
 	}
-	public String getStatus() {
+	public Status getStatus() {
 		return status;
 	}
-	public void setStatus(String status) {
+	public void setStatus(Status status) {
 		this.status = status;
 	}
 	public User getReportedBy() {
